@@ -11,6 +11,8 @@ from yolov3_tf2.dataset import transform_images, load_tfrecord_dataset
 from yolov3_tf2.utils import draw_outputs
 
 flags.DEFINE_string('classes', './data/coco.names', 'path to classes file')
+flags.DEFINE_integer('yolo_max_boxes', 100,
+                     'maximum number of boxes per image')
 flags.DEFINE_string('weights', './checkpoints/yolov3.tf',
                     'path to weights file')
 flags.DEFINE_boolean('tiny', False, 'yolov3 or yolov3-tiny')
