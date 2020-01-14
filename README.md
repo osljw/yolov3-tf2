@@ -3,7 +3,8 @@
 This repo provides a clean implementation of YoloV3 in TensorFlow 2.0 using all the best practices.
 
 - wider_face detect demo (no transfer after 3 epoch)
-![demo](https://raw.githubusercontent.com/osljw/yolov3-tf2/master/data/girl_out.jpg)
+
+![demo](https://raw.githubusercontent.com/osljw/yolov3-tf2/wider_face/data/girl_out.jpg)
 
 ## Key Features
 
