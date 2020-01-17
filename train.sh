@@ -3,8 +3,8 @@ python train.py \
     --val_dataset ./wider_face/wider_face_val.tfrecord \
     --classes ./wider_face/wider_face.names \
     --num_classes 2 \
+    --yolo_max_boxes 10 \
     --mode eager_tf --transfer none \
     --batch_size 16 \
     --epochs 10
 
-#--yolo_max_boxes 10 \
