@@ -25,10 +25,10 @@ def build_example(annotation, class_map):
     width = int(annotation['size']['width'])
     height = int(annotation['size']['height'])
 
-    xmin = []
-    ymin = []
-    xmax = []
-    ymax = []
+    xmins = []
+    ymins = []
+    xmaxs = []
+    ymaxs = []
     classes = []
     classes_text = []
     truncated = []
@@ -39,10 +39,15 @@ def build_example(annotation, class_map):
             difficult = bool(int(obj['difficult']))
             difficult_obj.append(int(difficult))
 
-            xmin.append(float(obj['bndbox']['xmin']) / width)
-            ymin.append(float(obj['bndbox']['ymin']) / height)
-            xmax.append(float(obj['bndbox']['xmax']) / width)
-            ymax.append(float(obj['bndbox']['ymax']) / height)
+            xmin = float(obj['bndbox']['xmin'])
+            ymin = float(obj['bndbox']['ymin'])
+            xmax = float(obj['bndbox']['xmax'])
+            ymax = float(obj['bndbox']['ymax'])
+
+            xmins.append(xmin / (width - 1))
+            ymins.append(ymin / (height - 1))
+            xmaxs.append(xmax / (width - 1))
+            ymaxs.append(ymax / (height - 1))
             classes_text.append(obj['name'].encode('utf8'))
             classes.append(class_map[obj['name']])
             truncated.append(int(obj['truncated']))
@@ -58,10 +63,10 @@ def build_example(annotation, class_map):
         'image/key/sha256': tf.train.Feature(bytes_list=tf.train.BytesList(value=[key.encode('utf8')])),
         'image/encoded': tf.train.Feature(bytes_list=tf.train.BytesList(value=[img_raw])),
         'image/format': tf.train.Feature(bytes_list=tf.train.BytesList(value=['jpeg'.encode('utf8')])),
-        'image/object/bbox/xmin': tf.train.Feature(float_list=tf.train.FloatList(value=xmin)),
-        'image/object/bbox/xmax': tf.train.Feature(float_list=tf.train.FloatList(value=xmax)),
-        'image/object/bbox/ymin': tf.train.Feature(float_list=tf.train.FloatList(value=ymin)),
-        'image/object/bbox/ymax': tf.train.Feature(float_list=tf.train.FloatList(value=ymax)),
+        'image/object/bbox/xmin': tf.train.Feature(float_list=tf.train.FloatList(value=xmins)),
+        'image/object/bbox/xmax': tf.train.Feature(float_list=tf.train.FloatList(value=xmaxs)),
+        'image/object/bbox/ymin': tf.train.Feature(float_list=tf.train.FloatList(value=ymins)),
+        'image/object/bbox/ymax': tf.train.Feature(float_list=tf.train.FloatList(value=ymaxs)),
         'image/object/class/text': tf.train.Feature(bytes_list=tf.train.BytesList(value=classes_text)),
         'image/object/class/label': tf.train.Feature(int64_list=tf.train.Int64List(value=classes)),
         'image/object/difficult': tf.train.Feature(int64_list=tf.train.Int64List(value=difficult_obj)),

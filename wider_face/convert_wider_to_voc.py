@@ -50,15 +50,17 @@ tailstr = '''\
 
 
 def writexml(idx, im, bbxes):
+    height, width = im.shape[0], im.shape[1]
     filename = ("VOCdevkit/VOC2012/Annotations/%06d.xml" % (idx))
     f = open(filename, "w")
     head = headstr % (idx, im.shape[1], im.shape[0], im.shape[2])
     f.write(head)
     for bbx in bbxes:
-        xmin = bbx[0]
-        ymin = bbx[1]
-        xmax = min(bbx[0] + bbx[2], im.shape[1])
-        ymax = min(bbx[1] + bbx[3], im.shape[0])
+        xmin = min(bbx[0], width - 1)
+        ymin = min(bbx[1], height - 1)
+        xmax = min(bbx[0] + bbx[2], width - 1)
+        ymax = min(bbx[1] + bbx[3], height - 1)
+        if xmin == xmax or ymin == ymax: continue
         f.write(objstr % ('face', xmin, ymin, xmax, ymax))
     f.write(tailstr)
     f.close()

@@ -5,6 +5,7 @@ python train.py \
     --num_classes 2 \
     --yolo_max_boxes 10 \
     --mode eager_tf --transfer none \
+    --use_ragged_dataset True \
     --batch_size 16 \
     --epochs 10
 

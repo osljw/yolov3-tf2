@@ -33,6 +33,12 @@ python convert_wider_to_voc.py
 bash convert_voc_to_tfrecord.sh
 ```
 
+wider_face data summary, invalid_image have zero bbox
+```
+data:train invalid_image:4 valid_image:12876 max_nums:1968
+data:val invalid_image:0 valid_image:3226 max_nums:709
+```
+
 ### 2. Transform Dataset
 
 See tools/voc2012.py for implementation, this format is based on [tensorflow object detection API](https://github.com/tensorflow/models/tree/master/research/object_detection). Many fields 
